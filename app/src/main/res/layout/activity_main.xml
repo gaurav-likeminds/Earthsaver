@@ -49,7 +49,9 @@
             android:inputType="number" />
 
         <RadioGroup
+            android:id="@+id/genderGroup"
             android:layout_margin="16dp"
+            android:checkedButton="@id/radioButtonMale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -61,19 +63,19 @@
                 android:text="Gender" />
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/radioButtonMale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Male" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/radioButtonFemale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Female" />
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/radioButtonOthers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Others" />

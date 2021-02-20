@@ -3,9 +3,11 @@ package com.globalwarming.earthsaver;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -13,11 +15,12 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextName;
-    EditText editTextEmailAddress; //TODO declare email
-    EditText editTextAge;//TODO declare age
-    EditText editTextLocation;//TODO declare location
-    EditText editTextPassword;//TODO declare password
-    EditText editTextRePassword; //TODO declare password again
+    EditText editTextEmailAddress;
+    EditText editTextAge;
+    EditText editTextLocation;
+    EditText editTextPassword;
+    EditText editTextRePassword;
+    RadioGroup genderGroup;
 
     Button buttonSubmit;
 
@@ -38,25 +41,92 @@ public class MainActivity extends AppCompatActivity {
         buttonSubmit = findViewById(R.id.button);
         editTextRePassword = findViewById(R.id.editTextRePassword);
         buttonSubmit = findViewById(R.id.button);
-        //TODO assign the id to all the elements
+        genderGroup = findViewById(R.id.genderGroup);
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //This block will run when the user taps on the submit button
                 String name = editTextName.getText().toString();
-                //TODO similarly get the other data here and store it in variables
                 String email = editTextEmailAddress.getText().toString();
-                //TODO upload the data to cloud
-                double age = editTextAge.getText().toString();
+                int age = 0;
+                if (!editTextAge.getText().toString().isEmpty()) {
+                    age = Integer.parseInt(editTextAge.getText().toString());
+                }
                 String location = editTextLocation.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String Repassword = editTextRePassword.getText().toString();
-                Snackbar.make(v, name, Snackbar.LENGTH_LONG).show();
+
+                int genderButtonId = genderGroup.getCheckedRadioButtonId();
+                String gender = "";
+                if (genderButtonId == R.id.radioButtonMale) {
+                    gender = "MALE";
+                } else if (genderButtonId == R.id.radioButtonFemale) {
+                    gender = "FEMALE";
+                } else {
+                    gender = "OTHER";
+                }
+
+                if (validate()) {
+                    //This block will only run when all the data are validated
+                    Snackbar.make(v, "All data are correct", Snackbar.LENGTH_SHORT).show();
+                }
+
             }
         });
 
 
+    }
+
+    private Boolean validate() {
+        boolean isValid = true;
+
+        String name = editTextName.getText().toString();
+        String email = editTextEmailAddress.getText().toString();
+        int age = 0;
+        if (!editTextAge.getText().toString().isEmpty()) {
+            age = Integer.parseInt(editTextAge.getText().toString());
+        }
+        String location = editTextLocation.getText().toString();
+        String password = editTextPassword.getText().toString();
+        String Repassword = editTextRePassword.getText().toString();
+
+        //Name
+        if (name.isEmpty() || name.length() < 5) {
+            isValid = false;
+            Snackbar.make(editTextName, "Name is invalid. Must be a 5 character name", Snackbar.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        //Email
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            isValid = false;
+            Snackbar.make(editTextEmailAddress, "Email is invalid.", Snackbar.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        //Age
+        if (age < 10) {
+            isValid = false;
+            Snackbar.make(editTextAge, "Minimum age is 10 years", Snackbar.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        //Password
+        if (password.length() < 6) {
+            isValid = false;
+            Snackbar.make(editTextPassword, "Password has to e of 6 characters", Snackbar.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        //New Password
+        if (!password.equals(Repassword)) {
+            isValid = false;
+            Snackbar.make(editTextPassword, "Password do not match", Snackbar.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        return isValid;
     }
 
 }

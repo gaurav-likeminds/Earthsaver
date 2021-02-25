@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1053701314087",
+    "project_id": "earth-saver-e5765",
+    "storage_bucket": "earth-saver-e5765.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053701314087:android:d9f93fad5d81c820672002",
+        "android_client_info": {
+          "package_name": "com.globalwarming.earthsaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053701314087-12ne7p3i0guun8v9qi26sf8dv1tlo702.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxoiptbwuRsVMJ5Sv3-rG_HkxMxi-0Xh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053701314087-12ne7p3i0guun8v9qi26sf8dv1tlo702.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

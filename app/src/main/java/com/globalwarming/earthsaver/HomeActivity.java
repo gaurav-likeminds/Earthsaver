@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.globalwarming.earthsaver.directories.DirectoryActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView textView;
     private Button buttonLogout;
+    private Button buttonView;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
         textView = findViewById(R.id.textView);
         buttonLogout = findViewById(R.id.buttonLogout);
+        buttonView = findViewById(R.id.buttonView);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -79,6 +82,14 @@ public class HomeActivity extends AppCompatActivity {
                 //This finish() function will basically destroy the current screen
                 finish();
 
+            }
+        });
+
+        buttonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, DirectoryActivity.class);
+                startActivity(intent);
             }
         });
 

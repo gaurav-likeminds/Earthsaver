@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textStyle="italic"
+            android:textColor="@color/black"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_question"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_question"
@@ -56,6 +58,22 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_question"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_question" />
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_marginTop="4dp"
+            android:hint="Enter a note here ..."
+            android:minLines="1"
+            android:maxLines="3"
+            android:visibility="gone"
+            android:inputType="text"
+            android:textColorHint="@android:color/holo_green_light"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_points" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

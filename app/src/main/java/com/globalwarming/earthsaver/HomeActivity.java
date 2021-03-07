@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.globalwarming.earthsaver.directories.DirectoryActivity;
+import com.globalwarming.earthsaver.group.CreateGroupActivity;
+import com.globalwarming.earthsaver.group.SearchActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,37 +55,45 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            //This finish() function will basically destroy the current screen
+            HomeActivity.this.finish();
+            return;
+        }
+
         db.collection("users").document(mAuth.getCurrentUser().getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String name = document.getString("name");
-                        Long age = document.getLong("age");
-                        String email = document.getString("email");
-                        String location = document.getString("location");
-                        String gender = document.getString("gender");
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String name = document.getString("name");
+                            Long age = document.getLong("age");
+                            String email = document.getString("email");
+                            String location = document.getString("location");
+                            String gender = document.getString("gender");
 
-                        textView.setText("Name : " + name + "\nEmail : " + email + "\nGender : " + gender + "\nAge : " + age + "\nLocation : " + location);
+                            textView.setText("Name : " + name + "\nEmail : " + email + "\nGender : " + gender + "\nAge : " + age + "\nLocation : " + location);
 
+                        }
                     }
-                }
-            }
-        });
+                });
 
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //It will logout the user
-                FirebaseAuth.getInstance().signOut();
-
-                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
                 startActivity(intent);
-                //This finish() function will basically destroy the current screen
-                finish();
+
+                //It will logout the user
+//                FirebaseAuth.getInstance().signOut();
+//
+//                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//                //This finish() function will basically destroy the current screen
+//                finish();
 
             }
         });

@@ -58,7 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
-            //This finish() function will basically destroy the current screen
             HomeActivity.this.finish();
             return;
         }
@@ -84,16 +83,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
-                startActivity(intent);
-
-                //It will logout the user
-//                FirebaseAuth.getInstance().signOut();
-//
-//                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+//                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
 //                startActivity(intent);
-//                //This finish() function will basically destroy the current screen
-//                finish();
+
+                FirebaseAuth.getInstance().signOut();
+
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
 
             }
         });

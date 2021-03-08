@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Create user group"
+        android:text="Create User Group"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -33,26 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_user"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_group_name" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Add User"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/button_create_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_create_group"
         android:layout_width="match_parent"
@@ -60,8 +40,8 @@
         android:layout_margin="16dp"
         android:text="Create Group"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_group_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,27 +4,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.globalwarming.earthsaver.R;
 import com.globalwarming.earthsaver.User;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class GroupUserAdapter extends RecyclerView.Adapter<GroupUserAdapter.ViewHolder> {
 
-    private List<User> users = new ArrayList<>();
-    private UserClickListener userClickListener;
+    private CollectionReference db;
+    private List<String> users = new ArrayList<>();
 
-    public void setList(List<User> users) {
+    public GroupUserAdapter() {
+        db = FirebaseFirestore.getInstance().collection("users");
+    }
+
+    public void setList(List<String> users) {
         this.users.clear();
         this.users.addAll(users);
         notifyDataSetChanged();
-    }
-
-    public void setListener(UserClickListener userClickListener) {
-        this.userClickListener = userClickListener;
     }
 
     @NonNull
@@ -36,15 +40,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = users.get(position);
-
-        holder.textViewName.setText(user.getName());
-        holder.textViewPoints.setText("Points : " + user.getPoints());
-        holder.textViewAddress.setText(user.getLocation());
-
-        holder.itemView.setOnClickListener(v -> {
-            if (userClickListener != null) {
-                userClickListener.onUserClick(user);
+        String userId = users.get(position);
+        db.document(userId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                User user = task.getResult().toObject(User.class);
+                String points = "Points : 0";
+                if (user.getPoints() != null) {
+                    points = "Points : " + user.getPoints();
+                }
+                holder.textViewName.setText(user.getName());
+                holder.textViewPoints.setText(points);
+                holder.textViewAddress.setText(user.getLocation());
             }
         });
     }
@@ -71,8 +77,3 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
 }
 
-interface UserClickListener {
-
-    void onUserClick(User user);
-
-}

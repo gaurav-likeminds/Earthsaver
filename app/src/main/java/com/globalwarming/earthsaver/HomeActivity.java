@@ -2,32 +2,34 @@ package com.globalwarming.earthsaver;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.globalwarming.earthsaver.directories.DirectoryActivity;
 import com.globalwarming.earthsaver.group.CreateGroupActivity;
-import com.globalwarming.earthsaver.group.SearchActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.globalwarming.earthsaver.group.GroupsActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView textView;
-    private Button buttonLogout;
-
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-
+    private TextView textViewMyPoints;
+    private Button buttonViewGroups;
+    private Button buttonCreateGroup;
     private TextView categoryPersonalHabit;
     private TextView categoryEnergy;
     private TextView categoryTransportation;
     private TextView categoryRecycle;
+    private Toolbar toolbar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onStart() {
@@ -35,7 +37,6 @@ public class HomeActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
-            //This finish() function will basically destroy the current screen
             HomeActivity.this.finish();
         }
     }
@@ -45,54 +46,43 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        textView = findViewById(R.id.textView);
-        buttonLogout = findViewById(R.id.buttonLogout);
-        categoryPersonalHabit = findViewById(R.id.categoryPersonalHabits);
-        categoryEnergy = findViewById(R.id.categoryEnergy);
-        categoryTransportation = findViewById(R.id.categoryTransportation);
-        categoryRecycle = findViewById(R.id.categoryRecycle);
-
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
             HomeActivity.this.finish();
             return;
         }
+        db = FirebaseFirestore.getInstance();
 
-        db.collection("users").document(mAuth.getCurrentUser().getUid())
-                .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            String name = document.getString("name");
-                            Long age = document.getLong("age");
-                            String email = document.getString("email");
-                            String location = document.getString("location");
-                            String gender = document.getString("gender");
+        textView = findViewById(R.id.text_view_welcome);
+        textViewMyPoints = findViewById(R.id.text_view_my_points);
+        buttonCreateGroup = findViewById(R.id.button_create_group);
+        buttonViewGroups = findViewById(R.id.button_view_groups);
+        categoryPersonalHabit = findViewById(R.id.categoryPersonalHabits);
+        categoryEnergy = findViewById(R.id.categoryEnergy);
+        categoryTransportation = findViewById(R.id.categoryTransportation);
+        categoryRecycle = findViewById(R.id.categoryRecycle);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-                            textView.setText("Name : " + name + "\nEmail : " + email + "\nGender : " + gender + "\nAge : " + age + "\nLocation : " + location);
-
-                        }
-                    }
-                });
-
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
-//                startActivity(intent);
-
-                FirebaseAuth.getInstance().signOut();
-
-                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-
+        db.collection("users").document(mAuth.getUid()).addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Log.e("HomeActivity", "", error);
             }
+            User user = value.toObject(User.class);
+            textViewMyPoints.setText("My Points : " + user.getPoints());
+            textView.setText("Welcome, " + user.getName());
+        });
+
+        buttonViewGroups.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, GroupsActivity.class);
+            startActivity(intent);
+        });
+
+        buttonCreateGroup.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
+            startActivity(intent);
         });
 
         categoryEnergy.setOnClickListener(v -> {
@@ -116,6 +106,36 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if (item.getItemId() == R.id.menu_share) {
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+                String shareMessage= "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

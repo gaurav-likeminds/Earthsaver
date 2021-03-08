@@ -1,14 +1,24 @@
 package com.globalwarming.earthsaver.group;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 public class Group implements Serializable {
 
+    private String id;
     private String name;
     private String created_by;
     private Long timestamp;
     private List<String> users;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -35,6 +45,9 @@ public class Group implements Serializable {
     }
 
     public List<String> getUsers() {
+        if (users == null) {
+            return Collections.emptyList();
+        }
         return users;
     }
 

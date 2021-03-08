@@ -11,6 +11,18 @@ public class User implements Serializable {
     private String gender;
     private String location;
     private String name;
+    private Long points;
+
+    public Long getPoints() {
+        if (points == null) {
+            return 0L;
+        }
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
+    }
 
     public String getId() {
         return id;

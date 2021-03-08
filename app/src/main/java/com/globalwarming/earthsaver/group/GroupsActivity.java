@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.globalwarming.earthsaver.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,9 +60,14 @@ public class GroupsActivity extends AppCompatActivity {
                         List<Group> groups = new ArrayList<>();
                         for (DocumentSnapshot ds : task.getResult()) {
                             Group group = ds.toObject(Group.class);
+                            group.setId(ds.getId());
                             groups.add(group);
                         }
-                        adapter.setGroups(groups);
+                        if (groups.isEmpty()) {
+                            Snackbar.make(recyclerView, "You are not in any group yet", Snackbar.LENGTH_SHORT).show();
+                        } else {
+                            adapter.setGroups(groups);
+                        }
                     } else {
                         Toast.makeText(GroupsActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
                         finish();

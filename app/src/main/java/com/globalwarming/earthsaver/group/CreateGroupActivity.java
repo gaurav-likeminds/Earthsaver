@@ -1,6 +1,7 @@
 package com.globalwarming.earthsaver.group;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class CreateGroupActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private EditText editText;
     private Button buttonCreateGroup;
     private ProgressDialog progressDialog;
@@ -29,8 +31,14 @@ public class CreateGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
+        toolbar = findViewById(R.id.toolbar);
         editText = findViewById(R.id.edit_text_group_name);
         buttonCreateGroup = findViewById(R.id.button_create_group);
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            onBackPressed();
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -49,7 +57,6 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
 
             progressDialog.show();
-
             Group group = new Group();
             group.setName(groupName);
             group.setTimestamp(System.currentTimeMillis());
@@ -58,13 +65,17 @@ public class CreateGroupActivity extends AppCompatActivity {
             users.add(mAuth.getUid());
             group.setUsers(users);
 
-            db.collection("groups").document().set(group).addOnCompleteListener(task -> {
+            String id = db.collection("groups").document().getId();
+
+            db.collection("groups").document(id).set(group).addOnCompleteListener(task -> {
                 progressDialog.dismiss();
                 if (task.isSuccessful()) {
+                    group.setId(id);
                     Toast.makeText(CreateGroupActivity.this, groupName + " group created successfully.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateGroupActivity.this, GroupsActivity.class);
+                    Intent intent = new Intent(CreateGroupActivity.this, GroupActivity.class);
                     intent.putExtra("group", group);
                     startActivity(intent);
+                    finish();
                 } else {
                     Snackbar.make(v, "Some error occurred", Snackbar.LENGTH_SHORT).show();
                 }

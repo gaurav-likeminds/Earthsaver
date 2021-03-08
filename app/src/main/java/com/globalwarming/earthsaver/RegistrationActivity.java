@@ -1,30 +1,28 @@
 package com.globalwarming.earthsaver;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.widget.Toolbar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
-
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private EditText editTextName;
-    private EditText editTextEmailAddress;
-    private EditText editTextAge;
-    private EditText editTextLocation;
-    private EditText editTextPassword;
-    private EditText editTextRePassword;
+    private Toolbar toolbar;
+    private TextInputLayout editTextName;
+    private TextInputLayout editTextEmailAddress;
+    private TextInputLayout editTextAge;
+    private TextInputLayout editTextLocation;
+    private TextInputLayout editTextPassword;
     private RadioGroup genderGroup;
     private Button buttonSubmit;
     private ProgressDialog progressDialog;
@@ -37,22 +35,22 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
+        toolbar = findViewById(R.id.toolbar);
         editTextName = findViewById(R.id.editTextName);
         buttonSubmit = findViewById(R.id.button);
         editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
-        buttonSubmit = findViewById(R.id.button);
         editTextAge = findViewById(R.id.editTextAge);
-        buttonSubmit = findViewById(R.id.button);
         editTextLocation = findViewById(R.id.editTextLocation);
-        buttonSubmit = findViewById(R.id.button);
         editTextPassword = findViewById(R.id.editTextPassword);
-        buttonSubmit = findViewById(R.id.button);
-        editTextRePassword = findViewById(R.id.editTextRePassword);
-        buttonSubmit = findViewById(R.id.button);
         genderGroup = findViewById(R.id.genderGroup);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            onBackPressed();
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -61,14 +59,14 @@ public class RegistrationActivity extends AppCompatActivity {
         buttonSubmit.setOnClickListener(v -> {
             Util.hideKeyboard(v);
             if (validate()) {
-                String name = editTextName.getText().toString();
-                String email = editTextEmailAddress.getText().toString();
+                String name = editTextName.getEditText().getText().toString();
+                String email = editTextEmailAddress.getEditText().getText().toString();
                 int age = 0;
-                if (!editTextAge.getText().toString().isEmpty()) {
-                    age = Integer.parseInt(editTextAge.getText().toString());
+                if (!editTextAge.getEditText().getText().toString().isEmpty()) {
+                    age = Integer.parseInt(editTextAge.getEditText().getText().toString());
                 }
-                String location = editTextLocation.getText().toString();
-                String password = editTextPassword.getText().toString();
+                String location = editTextLocation.getEditText().getText().toString();
+                String password = editTextPassword.getEditText().getText().toString();
                 int genderButtonId = genderGroup.getCheckedRadioButtonId();
                 String gender;
                 if (genderButtonId == R.id.radioButtonMale) {
@@ -120,14 +118,13 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private Boolean validate() {
-        String name = editTextName.getText().toString();
-        String email = editTextEmailAddress.getText().toString();
+        String name = editTextName.getEditText().getText().toString();
+        String email = editTextEmailAddress.getEditText().getText().toString();
         int age = 0;
-        if (!editTextAge.getText().toString().isEmpty()) {
-            age = Integer.parseInt(editTextAge.getText().toString());
+        if (!editTextAge.getEditText().getText().toString().isEmpty()) {
+            age = Integer.parseInt(editTextAge.getEditText().getText().toString());
         }
-        String password = editTextPassword.getText().toString();
-        String Repassword = editTextRePassword.getText().toString();
+        String password = editTextPassword.getEditText().getText().toString();
 
         //Name
         if (name.isEmpty() || name.length() < 5) {
@@ -153,11 +150,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
 
-        //New Password
-        if (!password.equals(Repassword)) {
-            Snackbar.make(editTextPassword, "Password do not match", Snackbar.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
 

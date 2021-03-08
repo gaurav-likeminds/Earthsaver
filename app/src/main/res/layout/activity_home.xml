@@ -4,21 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".HomeActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Hey there"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white" />
+
+    <TextView
+        android:id="@+id/text_view_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Welcome, User"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_welcome">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/text_view_my_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Points : 0"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_view_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View groups"
+                android:textAllCaps="false"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_my_points" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_create_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create a group"
+                android:textAllCaps="false"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_view_groups" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/textViewPoints"
@@ -29,21 +93,20 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewUser"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="16dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="6dp"
         app:cardElevation="6dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textViewPoints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,17 +177,5 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

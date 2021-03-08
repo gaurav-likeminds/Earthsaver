@@ -57,7 +57,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         });
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), GroupsActivity.class);
+            Intent intent = new Intent(v.getContext(), GroupActivity.class);
             intent.putExtra("group", group);
             v.getContext().startActivity(intent);
         });

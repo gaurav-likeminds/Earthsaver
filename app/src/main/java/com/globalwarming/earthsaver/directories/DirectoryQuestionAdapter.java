@@ -7,24 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.globalwarming.earthsaver.R;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class DirectoryQuestionAdapter extends RecyclerView.Adapter<DirectoryQuestionAdapter.ViewHolder> {
 
-    private List<DirectoryQuestion> list;
+    private List<DirectoryQuestion> list = new ArrayList<>();
     private HashMap<String, Pair<Boolean, String>> entries = new HashMap<>();
 
-    public DirectoryQuestionAdapter(List<DirectoryQuestion> list) {
-        this.list = list;
+    public void setList(List<DirectoryQuestion> list) {
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
     public HashMap<String, Pair<Boolean, String>> getEntries() {

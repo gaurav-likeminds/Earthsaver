@@ -1,66 +1,65 @@
 package com.globalwarming.earthsaver;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText etEmail;
-    private EditText etPassword;
+    private Toolbar toolbar;
+    private TextInputLayout etEmail;
+    private TextInputLayout etPassword;
     private Button buttonLogin;
     private TextView textRegister;
+    private TextView textForgotPassword;
 
     private FirebaseAuth mAuth;
 
     private ProgressDialog progressDialog;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            //The user is already logged in
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.getCurrentUser();
-        //If the value of the current user is null, it means the user is not logged in
-        //and if it is not null, then the user is logged in.
-
+        toolbar = findViewById(R.id.toolbar);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         textRegister = findViewById(R.id.textRegister);
+        textForgotPassword = findViewById(R.id.textForgotPassword);
+        setSupportActionBar(toolbar);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging in ...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
+
+        mAuth = FirebaseAuth.getInstance();
 
         textRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
             startActivity(intent);
         });
 
+        textForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
+
         buttonLogin.setOnClickListener(v -> {
             Util.hideKeyboard(v);
             if (validate()) {
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+                String email = etEmail.getEditText().getText().toString().trim();
+                String password = etPassword.getEditText().getText().toString().trim();
                 progressDialog.show();
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -81,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private Boolean validate() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        String email = etEmail.getEditText().getText().toString().trim();
+        String password = etPassword.getEditText().getText().toString().trim();
 
         //Email
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

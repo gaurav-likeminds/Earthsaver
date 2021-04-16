@@ -8,4 +8,8 @@
     <color name="background">#f9f9f9</color>
 
     <color name="light_transparent">#33000000</color>
+
+    <color name="red">#f44336</color>
+    <color name="yellow">#ffeb3b</color>
+    <color name="green">#4caf50</color>
 </resources>

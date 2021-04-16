@@ -9,5 +9,6 @@ data class Group(
     var name: String? = "",
     var created_by: String? = "",
     var timestamp: Long? = 0L,
-    var users: List<String>? = emptyList()
+    var users: List<String>? = emptyList(),
+    var isAccepted: Boolean = false
 ) : Parcelable

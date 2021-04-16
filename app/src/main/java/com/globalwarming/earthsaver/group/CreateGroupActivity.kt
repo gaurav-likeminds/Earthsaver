@@ -45,7 +45,7 @@ class CreateGroupActivity : AppCompatActivity() {
             group.timestamp = System.currentTimeMillis()
             group.created_by = mAuth.uid!!
             val users = ArrayList<String>()
-            users.add(mAuth.uid!!)
+            users.add("TRUE|${mAuth.uid!!}")
             group.users = users
             val id = db.collection("groups").document().id
             db.collection("groups").document(id).set(group)

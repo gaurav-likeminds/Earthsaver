@@ -52,10 +52,31 @@ class HomeActivity : AppCompatActivity() {
                 if (error != null) {
                     Log.e("HomeActivity", "", error)
                 }
-                val user = value?.toObject(User::class.java)
-                binding.textViewMyPoints.text = "My Points : ${user?.points}"
-                binding.textViewWelcome.text = "Welcome, ${user?.name}"
+                val user = value?.toObject(User::class.java) ?: return@addSnapshotListener
+                binding.textViewMyPoints.text = "My Points : ${user.points}"
+                binding.textViewWelcome.text = "Welcome, ${user.name}"
+                val points = user.points.toInt()
+                if (points in 1..100) {
+                    binding.progressRed.progress = points
+                }
+                if (points in 101..300) {
+                    binding.progressRed.progress = 100
+                    val percentage = (points - 100) / 2
+                    binding.progressYellow.progress = percentage
+                }
+                if (points >= 301) {
+                    binding.progressRed.progress = 100
+                    binding.progressYellow.progress = 100
+                    val percentage = (points - 300) / 2
+                    binding.progressGreen.progress = percentage
+                }
             }
+
+        binding.buttonViewProfile.setOnClickListener {
+            val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.buttonViewGroups.setOnClickListener {
             val intent = Intent(this@HomeActivity, GroupsActivity::class.java)
             startActivity(intent)

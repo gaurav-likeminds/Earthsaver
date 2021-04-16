@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.7.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.ashrafDoubleO7:ExpandableSelectionView:1.0.1'
+
 }
 repositories {
     mavenCentral()

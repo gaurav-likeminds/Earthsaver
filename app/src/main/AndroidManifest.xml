@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EarthSaver"
         tools:ignore="AllowBackup">
+        <activity android:name=".account.ImageUploadActivity"></activity>
+        <activity android:name=".account.EditProfileActivity" />
+        <activity
+            android:name=".ImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.ProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:screenOrientation="portrait" />
@@ -30,7 +38,9 @@
         <activity
             android:name=".directories.DirectoryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".HomeActivity">
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

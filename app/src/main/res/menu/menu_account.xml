@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_profile"
-        android:title="My Profile"
+        android:id="@+id/menu_edit_profile"
+        android:title="Edit Profile"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_share"
-        android:title="Share app"
+        android:id="@+id/menu_logout"
+        android:title="Logout"
         app:showAsAction="never" />
 
 </menu>

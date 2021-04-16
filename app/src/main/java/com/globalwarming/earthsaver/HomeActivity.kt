@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.globalwarming.earthsaver.account.ProfileActivity
 import com.globalwarming.earthsaver.databinding.ActivityHomeBinding
 import com.globalwarming.earthsaver.directories.DirectoryActivity
 import com.globalwarming.earthsaver.group.CreateGroupActivity
@@ -91,11 +92,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_logout) {
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+        if (item.itemId == R.id.menu_profile) {
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-            finish()
         }
         if (item.itemId == R.id.menu_share) {
             try {

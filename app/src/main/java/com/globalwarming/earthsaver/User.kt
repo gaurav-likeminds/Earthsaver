@@ -11,5 +11,6 @@ data class User(
     var gender: String = "",
     var location: String = "",
     var name: String = "",
-    var points: Long = 0L
+    var points: Long = 0L,
+    var image: String = ""
 ) : Parcelable

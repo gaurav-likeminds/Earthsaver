@@ -42,6 +42,18 @@
                 tools:text="Personal Habits" />
 
             <TextView
+                android:id="@+id/text_already_responded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/text_category"
+                app:layout_constraintTop_toBottomOf="@+id/text_question"
+                android:text=" . Already Responded" />
+
+            <TextView
                 android:id="@+id/text_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

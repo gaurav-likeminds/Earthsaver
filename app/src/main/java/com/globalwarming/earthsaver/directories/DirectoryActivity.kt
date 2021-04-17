@@ -44,25 +44,31 @@ class DirectoryActivity : AppCompatActivity() {
         loader = Loader(this, "Fetching questions ...")
         loader.show()
 
-        //fetchAllPrevious();
-        db.collection("directories")
-            .whereEqualTo("category", category)
-            .get()
-            .addOnCompleteListener { task ->
-                loader.dismiss()
-                if (task.isSuccessful) {
-                    for (document in task.result!!) {
-                        val directoryQuestion = document.toObject(DirectoryQuestion::class.java)
-                        directoryQuestion.id = document.id
-                        list.add(directoryQuestion)
+        fetchAllPrevious {
+            db.collection("directories")
+                .whereEqualTo("category", category)
+                .get()
+                .addOnCompleteListener { task ->
+                    loader.dismiss()
+                    if (task.isSuccessful) {
+                        for (document in task.result!!) {
+                            val directoryQuestion = document.toObject(DirectoryQuestion::class.java)
+                            directoryQuestion.id = document.id
+                            val contains = oldRespondedQuestions.firstOrNull {
+                                it.id.split("#")[0] == document.id
+                            } != null
+                            directoryQuestion.canRespond = !contains
+                            list.add(directoryQuestion)
+                        }
+                        adapter.setList(list.sortedByDescending { it.canRespond })
                     }
-                    adapter.setList(list)
                 }
-            }
+        }
+
     }
 
-    private fun fetchAllPrevious() {
-        val minTimestamp = System.currentTimeMillis() - 60 * 60 * 24 * 1000 * 30
+    private fun fetchAllPrevious(cb: () -> Unit) {
+        val minTimestamp = System.currentTimeMillis() - (24 * 60 * 60 * 1000)
         db.collection("users")
             .document(mAuth.currentUser!!.uid)
             .collection("entries")
@@ -72,8 +78,12 @@ class DirectoryActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     for (document in task.result!!) {
                         val directoryQuestion = document.toObject(DirectoryQuestion::class.java)
+                        directoryQuestion.id = document.id
                         oldRespondedQuestions.add(directoryQuestion)
                     }
+                    cb()
+                } else {
+                    cb()
                 }
             }
     }
@@ -88,33 +98,32 @@ class DirectoryActivity : AppCompatActivity() {
             Util.hideKeyboard(binding.parent)
             loader.setText("Submitting answers ...")
             loader.show()
-            var points = 0
+            var points = 0L
             val entries = adapter.getEntries()
             val userId = mAuth.uid!!
             val batch = db.batch()
             for ((key, value) in entries) {
-                if (value.first) {
-                    points++
+                val dq = list.firstOrNull {
+                    it.id == key
                 }
-                val directoryEntry = DirectoryEntry()
-                directoryEntry.id = key
-                directoryEntry.timestamp = System.currentTimeMillis()
-                directoryEntry.answer = value.first
-                if (value.first) {
-                    directoryEntry.point = 1L
-                    directoryEntry.note = value.second
-                } else {
-                    directoryEntry.point = 0L
+                if (dq != null) {
+                    points += dq.points
+                    val directoryEntry = DirectoryEntry()
+                    directoryEntry.id = key
+                    directoryEntry.timestamp = System.currentTimeMillis()
+                    directoryEntry.answer = true
+                    directoryEntry.point = dq.points
+                    directoryEntry.note = value
+                    batch[db.collection("users")
+                        .document(userId)
+                        .collection("entries")
+                        .document(key + "#" + directoryEntry.timestamp)] = directoryEntry
                 }
-                batch[db.collection("users")
-                    .document(userId)
-                    .collection("entries")
-                    .document(key.toString() + "#" + directoryEntry.timestamp)] = directoryEntry
             }
             batch.update(
                 db.collection("users").document(mAuth.uid!!),
                 "points",
-                FieldValue.increment(points.toLong())
+                FieldValue.increment(points)
             )
             batch.commit().addOnCompleteListener { task ->
                 loader.dismiss()

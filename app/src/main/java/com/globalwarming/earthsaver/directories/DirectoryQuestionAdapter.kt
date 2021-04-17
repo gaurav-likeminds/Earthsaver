@@ -2,18 +2,18 @@ package com.globalwarming.earthsaver.directories
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.globalwarming.earthsaver.databinding.LayoutDirectoryQuestionBinding
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class DirectoryQuestionAdapter : RecyclerView.Adapter<DirectoryQuestionAdapter.ViewHolder>() {
 
     private val list = ArrayList<DirectoryQuestion>()
-    private val entries = HashMap<String, Pair<Boolean, String>>()
+    private val entries = HashMap<String, String>()
 
     fun setList(list: List<DirectoryQuestion>) {
         this.list.clear()
@@ -21,12 +21,16 @@ class DirectoryQuestionAdapter : RecyclerView.Adapter<DirectoryQuestionAdapter.V
         notifyDataSetChanged()
     }
 
-    fun getEntries(): HashMap<String, Pair<Boolean, String>> {
+    fun getEntries(): HashMap<String, String> {
         return entries
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LayoutDirectoryQuestionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = LayoutDirectoryQuestionBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
 
@@ -35,18 +39,24 @@ class DirectoryQuestionAdapter : RecyclerView.Adapter<DirectoryQuestionAdapter.V
         holder.binding.textQuestion.text = directoryQuestion.question
         holder.binding.textCategory.text = directoryQuestion.category
         holder.binding.textPoints.text = "${directoryQuestion.points} point"
+        holder.binding.checkBox.isEnabled = directoryQuestion.canRespond
+        holder.binding.textAlreadyResponded.visibility = if (directoryQuestion.canRespond) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
         if (entries.containsKey(directoryQuestion.id)) {
             holder.binding.checkBox.isChecked = true
             holder.binding.editText.visibility = View.VISIBLE
-            holder.binding.editText.setText(entries[directoryQuestion.id]?.second)
+            holder.binding.editText.setText(entries[directoryQuestion.id])
         } else {
             holder.binding.checkBox.isChecked = false
             holder.binding.editText.visibility = View.GONE
         }
-        holder.binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+        holder.binding.checkBox.setOnCheckedChangeListener { checkBox, isChecked ->
             if (isChecked) {
                 holder.binding.editText.visibility = View.VISIBLE
-                entries[directoryQuestion.id] = Pair.create(true, "")
+                entries[directoryQuestion.id] = ""
             } else {
                 holder.binding.editText.visibility = View.GONE
                 entries.remove(directoryQuestion.id)
@@ -56,14 +66,24 @@ class DirectoryQuestionAdapter : RecyclerView.Adapter<DirectoryQuestionAdapter.V
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                entries[directoryQuestion.id] = Pair(entries[directoryQuestion.id]?.first, s.toString())
+                entries[directoryQuestion.id] = s.toString()
             }
         })
+        holder.binding.root.setOnClickListener {
+            if (!directoryQuestion.canRespond) {
+                Snackbar.make(
+                    it,
+                    "You have already engaged with this activity in the last 24 hours. Please try again in a day.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    class ViewHolder(val binding: LayoutDirectoryQuestionBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: LayoutDirectoryQuestionBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

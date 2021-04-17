@@ -39,17 +39,18 @@ class GroupsActivity : AppCompatActivity() {
 
         db.collection("groups")
             .whereArrayContains("users", "TRUE|${mAuth.uid!!}")
-            .addSnapshotListener { value, error ->
-                if (error != null) {
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.exception != null) {
                     loader.dismiss()
                     Toast.makeText(this@GroupsActivity, "Some error occurred", Toast.LENGTH_SHORT)
                         .show()
                     finish()
-                    return@addSnapshotListener
+                    return@addOnCompleteListener
                 }
                 val groups = ArrayList<Group>()
-                for (ds in value!!.documents) {
-                    val group = ds.toObject(Group::class.java)!!
+                for (ds in task.result!!) {
+                    val group = ds.toObject(Group::class.java)
                     group.id = ds.id
                     group.isAccepted = true
                     groups.add(group)

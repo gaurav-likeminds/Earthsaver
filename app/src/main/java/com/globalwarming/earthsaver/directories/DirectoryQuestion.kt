@@ -9,5 +9,6 @@ data class DirectoryQuestion(
     var answer: Boolean = false,
     var category: String = "",
     var points: Long = 0L,
-    var question: String = ""
+    var question: String = "",
+    var canRespond: Boolean = false
 ): Parcelable

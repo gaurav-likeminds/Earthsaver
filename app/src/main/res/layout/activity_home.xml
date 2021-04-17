@@ -19,248 +19,277 @@
             app:title="@string/app_name"
             app:titleTextColor="@color/white" />
 
-        <TextView
-            android:id="@+id/text_view_welcome"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="Welcome, User"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_welcome">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/text_view_my_points"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/text_view_welcome"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="My Points : 0"
+                    android:layout_margin="12dp"
+                    android:text="Welcome, User"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_margin="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/progress_red"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    app:indicatorColor="@color/red"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_red"
-                    app:layout_constraintEnd_toStartOf="@+id/text_red"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_red"
-                    app:trackColor="@color/light_transparent"
-                    app:trackCornerRadius="4dp"
-                    app:trackThickness="10dp" />
-
-                <TextView
-                    android:id="@+id/text_red"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="000 - 100"
-                    android:textColor="@color/red"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_my_points" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/progress_yellow"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    app:indicatorColor="@color/yellow"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_yellow"
-                    app:layout_constraintEnd_toStartOf="@+id/text_yellow"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_yellow"
-                    app:trackColor="@color/light_transparent"
-                    app:trackCornerRadius="4dp"
-                    app:trackThickness="10dp" />
-
-                <TextView
-                    android:id="@+id/text_yellow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="101 - 300"
-                    android:textColor="@color/yellow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_red" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/progress_green"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    app:indicatorColor="@color/green"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_green"
-                    app:layout_constraintEnd_toStartOf="@+id/text_green"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_green"
-                    app:trackColor="@color/light_transparent"
-                    app:trackCornerRadius="4dp"
-                    app:trackThickness="10dp" />
-
-                <TextView
-                    android:id="@+id/text_green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="301 - 500"
-                    android:textColor="@color/green"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_yellow" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_view_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="View My Profile"
-                    android:textAllCaps="false"
-                    android:layout_margin="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_green" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_view_groups"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="View groups"
-                    android:textAllCaps="false"
-                    android:layout_margin="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_view_profile" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_create_group"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
-                    android:text="Create a group"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_welcome">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_view_my_points"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="My Points : 0"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_red"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            app:indicatorColor="@color/red"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_red"
+                            app:layout_constraintEnd_toStartOf="@+id/text_red"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/text_red"
+                            app:trackColor="@color/light_transparent"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="10dp" />
+
+                        <TextView
+                            android:id="@+id/text_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="000 - 100"
+                            android:textColor="@color/red"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_view_my_points" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_yellow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            app:indicatorColor="@color/yellow"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_yellow"
+                            app:layout_constraintEnd_toStartOf="@+id/text_yellow"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/text_yellow"
+                            app:trackColor="@color/light_transparent"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="10dp" />
+
+                        <TextView
+                            android:id="@+id/text_yellow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="101 - 300"
+                            android:textColor="@color/yellow"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_red" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_green"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            app:indicatorColor="@color/green"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_green"
+                            app:layout_constraintEnd_toStartOf="@+id/text_green"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/text_green"
+                            app:trackColor="@color/light_transparent"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="10dp" />
+
+                        <TextView
+                            android:id="@+id/text_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="301 - 500"
+                            android:textColor="@color/green"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_yellow" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_view_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="View My Profile"
+                            android:textAllCaps="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_green" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_view_groups"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="View groups"
+                            android:textAllCaps="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/button_view_profile" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_create_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="Create a group"
+                            android:textAllCaps="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/button_view_groups" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/textViewPoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Earth Points"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewUser" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPoints">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/categoryPersonalHabits"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Personal Habits"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/categoryEnergy"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Energy"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/categoryTransportation"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Transportation"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/categoryRecycle"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Recycle"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Invite a friend via email"
                     android:textAllCaps="false"
+                    android:layout_margin="12dp"
+                    android:padding="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_view_groups" />
+                    app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/textViewPoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Earth Points"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewUser" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPoints">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/categoryPersonalHabits"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Personal Habits"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/categoryEnergy"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Energy"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/categoryTransportation"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Transportation"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/categoryRecycle"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Recycle"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

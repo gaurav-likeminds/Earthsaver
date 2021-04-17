@@ -1,6 +1,7 @@
 package com.globalwarming.earthsaver
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -105,6 +106,19 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("category", Category.CATEGORY_Recycle)
             startActivity(intent)
         }
+
+        binding.buttonShare.setOnClickListener {
+            try {
+                val mailme = Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:")
+                    putExtra(Intent.EXTRA_TEXT, getString(R.string.app_name))
+                    putExtra(Intent.EXTRA_SUBJECT, "Let me recommend you this application\n\nhttps://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+                }
+                startActivity(mailme)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -121,7 +135,7 @@ class HomeActivity : AppCompatActivity() {
             try {
                 val shareIntent = Intent(Intent.ACTION_SEND)
                 shareIntent.type = "text/plain"
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name")
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
                 val shareMessage =
                     "\nLet me recommend you this application\n\nhttps://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)

@@ -140,9 +140,7 @@ class ProfileActivity : AppCompatActivity() {
         } else {
             menu1?.isVisible = false
             menu2?.isVisible = false
-            if (isAdmin) {
-                menu3?.isVisible = true
-            }
+            menu3?.isVisible = isAdmin
         }
         return super.onCreateOptionsMenu(menu)
     }

@@ -125,6 +125,7 @@ class ProfileActivity : AppCompatActivity() {
             .error(R.drawable.logo)
             .into(binding.profileImage)
         binding.textName.text = user.name
+        binding.textEmail.text = user.email
         binding.textPoints.text = "${user.points} Points"
     }
 

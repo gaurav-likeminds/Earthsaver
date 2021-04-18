@@ -58,10 +58,23 @@
                     tools:text="Gaurav Bordoloi" />
 
                 <TextView
-                    android:id="@+id/text_points"
+                    android:id="@+id/text_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_name"
+                    tools:text="info@gauravbordoloi.me" />
+
+                <TextView
+                    android:id="@+id/text_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/colorAccent"
@@ -69,7 +82,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_name"
+                    app:layout_constraintTop_toBottomOf="@+id/text_email"
                     tools:text="254 Points" />
 
                 <com.google.android.material.button.MaterialButton

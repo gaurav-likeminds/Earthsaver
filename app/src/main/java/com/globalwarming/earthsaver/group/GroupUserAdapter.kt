@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.globalwarming.earthsaver.R
 import com.globalwarming.earthsaver.User
 import com.globalwarming.earthsaver.account.ProfileActivity
 import com.globalwarming.earthsaver.databinding.LayoutUserBinding
@@ -46,6 +48,10 @@ class GroupUserAdapter(
                 holder.binding.textViewName.text = user.name
                 holder.binding.textViewPoints.text = "Points : ${user.points}"
                 holder.binding.textViewAddress.text = user.location
+                Glide.with(holder.binding.imageView).load(user.image)
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .into(holder.binding.imageView)
             }
         }
 
